@@ -71,7 +71,7 @@ class HomeScreen extends ConsumerWidget {
                       child: const Icon(Icons.generating_tokens_sharp),
                       onPressed: () async {
                         bool flag = createComicPanel(ref);
-                        if (flag) scrollToBottom(ref);
+                        // if (flag) scrollToBottom(ref);
                       },
                     ),
                     Spaces.vertGapInBetween,
@@ -126,7 +126,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 // side input form to take input query
                 SizedBox(
-                  width: DeviceDimension.horzBlockSize * 20,
+                  width: DeviceDimension.horzBlockSize * 30,
                   child: Padding(
                     padding: EdgeInsets.all(DeviceDimension.horzBlockSize),
                     child: InputQueryForm(),
@@ -137,7 +137,7 @@ class HomeScreen extends ConsumerWidget {
           : Column(
               children: [
                 SizedBox(
-                  height: DeviceDimension.vertBlockSize * 25,
+                  height: DeviceDimension.vertBlockSize * 35,
                   child: Padding(
                     padding: EdgeInsets.all(DeviceDimension.horzBlockSize),
                     child: InputQueryForm(),
@@ -164,7 +164,7 @@ class HomeScreen extends ConsumerWidget {
                     child: const Icon(Icons.generating_tokens_sharp),
                     onPressed: () async {
                       bool flag = createComicPanel(ref);
-                      if (flag) scrollToBottom(ref);
+                      // if (flag) scrollToBottom(ref);
                     },
                   ),
                   Spaces.horzGapInBetween,
