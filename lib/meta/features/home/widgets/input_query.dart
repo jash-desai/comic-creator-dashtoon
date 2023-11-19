@@ -79,26 +79,6 @@ class InputQueryForm extends ConsumerWidget {
     ref.read(isInputEnabled.notifier).update((state) => -1);
   }
 
-  Widget completeButton(WidgetRef ref) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Container(
-        decoration: BoxDecoration(
-          color: kBlack,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: IconButton(
-          highlightColor: kBlue,
-          onPressed: () => clearEntries(ref),
-          icon: const Icon(
-            Icons.done,
-            color: iconColor,
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(inputQueryController);
@@ -134,10 +114,8 @@ class InputQueryForm extends ConsumerWidget {
                           .setColor(textColor)
                           .size(DeviceDimension.horzBlockSize * 1.2),
                     ),
-                    if (DeviceDimension.screenWidth > 1000) completeButton(ref),
                   ],
                 ),
-                if (DeviceDimension.screenWidth < 1000) completeButton(ref),
                 Spaces.vertGapInBetween,
                 Text(
                   "Prompt",
@@ -222,9 +200,36 @@ class InputQueryForm extends ConsumerWidget {
                           },
                           child: Text(
                             "Create Panel",
-                            style: Fonts.light.setColor(textColor).size(17),
+                            style: Fonts.light
+                                .setColor(textColor)
+                                .size(DeviceDimension.textScaleFactor * 17),
                           ),
                         ),
+                ),
+                Spaces.vertGapInBetween,
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(39, 41, 45, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (isLoading) {
+                        showToast("Please wait...");
+                      } else {
+                        clearEntries(ref);
+                      }
+                    },
+                    child: Text(
+                      "Exit Panel",
+                      style: Fonts.light
+                          .setColor(textColor)
+                          .size(DeviceDimension.textScaleFactor * 17),
+                    ),
+                  ),
                 ),
               ],
             ),
