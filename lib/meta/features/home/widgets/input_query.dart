@@ -37,7 +37,7 @@ class InputQueryForm extends ConsumerWidget {
           title,
           style: Fonts.bold
               .setColor(iconColor)
-              .size(DeviceDimension.horzBlockSize * 1.2),
+              .size(DeviceDimension.textScaleFactor * 15),
         ),
       ),
       divider: Divider(
@@ -112,14 +112,16 @@ class InputQueryForm extends ConsumerWidget {
                       overflow: TextOverflow.clip,
                       style: Fonts.bold
                           .setColor(textColor)
-                          .size(DeviceDimension.horzBlockSize * 1.2),
+                          .size(DeviceDimension.textScaleFactor * 15),
                     ),
                   ],
                 ),
                 Spaces.vertGapInBetween,
                 Text(
                   "Prompt",
-                  style: Fonts.bold.setColor(textColor).size(12),
+                  style: Fonts.bold
+                      .setColor(textColor)
+                      .size(DeviceDimension.textScaleFactor * 13),
                 ),
                 Spaces.vertSmallestGapInBetween,
                 TextField(
@@ -137,7 +139,7 @@ class InputQueryForm extends ConsumerWidget {
                     ),
                     hintStyle: Fonts.light
                         .setColor(textColor.withOpacity(0.7))
-                        .size(15),
+                        .size(DeviceDimension.textScaleFactor * 15),
                     fillColor: const Color.fromRGBO(39, 41, 45, 1),
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -146,7 +148,9 @@ class InputQueryForm extends ConsumerWidget {
                 Spaces.vertGapInBetween,
                 Text(
                   "Generative Speech Bubble (Experimental)",
-                  style: Fonts.bold.setColor(textColor).size(12),
+                  style: Fonts.bold
+                      .setColor(textColor)
+                      .size(DeviceDimension.textScaleFactor * 13),
                 ),
                 Spaces.vertSmallestGapInBetween,
                 TextField(
@@ -164,7 +168,7 @@ class InputQueryForm extends ConsumerWidget {
                     ),
                     hintStyle: Fonts.light
                         .setColor(textColor.withOpacity(0.7))
-                        .size(15),
+                        .size(DeviceDimension.textScaleFactor * 15),
                     fillColor: const Color.fromRGBO(39, 41, 45, 1),
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -202,7 +206,7 @@ class InputQueryForm extends ConsumerWidget {
                             "Create Panel",
                             style: Fonts.light
                                 .setColor(textColor)
-                                .size(DeviceDimension.textScaleFactor * 17),
+                                .size(DeviceDimension.textScaleFactor * 16),
                           ),
                         ),
                 ),
@@ -227,7 +231,7 @@ class InputQueryForm extends ConsumerWidget {
                       "Exit Panel",
                       style: Fonts.light
                           .setColor(textColor)
-                          .size(DeviceDimension.textScaleFactor * 17),
+                          .size(DeviceDimension.textScaleFactor * 16),
                     ),
                   ),
                 ),

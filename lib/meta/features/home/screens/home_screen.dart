@@ -33,99 +33,175 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     DeviceDimension().init(context);
     final comicFrames = ref.watch(comicPanelControllerProvider);
-    late double wdth;
-    if (comicFrames.length > 1) {
-      wdth = DeviceDimension.horzBlockSize * 55;
-    } else {
-      wdth = DeviceDimension.horzBlockSize * 65;
-    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("AI Comic Creator by Dashtoon API"),
-        centerTitle: true,
+        title: Text(
+          "AI Comic Creator by Dashtoon API",
+          style: Fonts.medium
+              .setColor(textColor)
+              .size(DeviceDimension.textScaleFactor * 20),
+        ),
+        titleSpacing: DeviceDimension.horzBlockSize * 2,
+        shadowColor: kWhite.withOpacity(0.5),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Comic Panel : ${comicFrames.length}",
-                softWrap: true,
-                overflow: TextOverflow.clip,
-                style: Fonts.bold
-                    .setColor(textColor)
-                    .size(DeviceDimension.horzBlockSize * 1.2),
-              ),
-              Spaces.vertGapInBetween,
-              Spaces.vertGapInBetween,
-              Spaces.vertGapInBetween,
+      body: DeviceDimension.screenWidth > 675
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Comic Panel : ${comicFrames.length}",
+                      softWrap: true,
+                      overflow: TextOverflow.clip,
+                      style: Fonts.bold
+                          .setColor(textColor)
+                          .size(DeviceDimension.textScaleFactor * 16),
+                    ),
+                    Spaces.vertGapInBetween,
+                    Spaces.vertGapInBetween,
+                    Spaces.vertGapInBetween,
 
-              // button to create
-              FloatingActionButton(
-                heroTag: "create",
-                child: const Icon(Icons.generating_tokens_sharp),
-                onPressed: () async {
-                  bool flag = createComicPanel(ref);
-                  if (flag) scrollToBottom(ref);
-                },
-              ),
-              Spaces.vertGapInBetween,
-              // button to export
-              FloatingActionButton(
-                heroTag: "save",
-                child: const Icon(Icons.save_rounded),
-                onPressed: () async {
-                  int totalPanels = comicFrames.length;
-                  if (totalPanels <= 0) {
-                    showToast("Create a panel to begin");
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const CustomDialogBox();
+                    // button to create
+                    FloatingActionButton(
+                      heroTag: "create",
+                      child: const Icon(Icons.generating_tokens_sharp),
+                      onPressed: () async {
+                        bool flag = createComicPanel(ref);
+                        if (flag) scrollToBottom(ref);
                       },
-                    );
-                  }
-                },
-              )
-            ],
-          ),
-          // ListView for comic strip
-          SizedBox(
-            width: wdth,
-            child: ref.read(comicStripControllerProvider),
-          ),
-          if (comicFrames.length > 1)
-            // scroll up and scroll down buttons
-            SizedBox(
-              width: DeviceDimension.horzBlockSize * 5,
-              child: const Column(
+                    ),
+                    Spaces.vertGapInBetween,
+                    // button to export
+                    FloatingActionButton(
+                      heroTag: "save",
+                      child: const Icon(Icons.save_rounded),
+                      onPressed: () async {
+                        int totalPanels = comicFrames.length;
+                        if (totalPanels <= 0) {
+                          showToast("Create a panel to begin");
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const CustomDialogBox();
+                            },
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                // ListView for comic strip
+                SizedBox(
+                  width: DeviceDimension.horzBlockSize * 50,
+                  // late double wdth;
+                  // if (comicFrames.length > 1) {
+                  // wdth = DeviceDimension.horzBlockSize * 55;
+                  // } else {
+                  // wdth = DeviceDimension.horzBlockSize * 65;
+                  // }
+                  child: ref.read(comicStripControllerProvider),
+                ),
+                if (comicFrames.length > 1)
+                  // scroll up and scroll down buttons
+                  SizedBox(
+                    width: DeviceDimension.horzBlockSize * 5,
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomButton(
+                          icon: Icons.arrow_upward_rounded,
+                          isBottom: false,
+                        ),
+                        CustomButton(
+                          icon: Icons.arrow_downward_rounded,
+                          isBottom: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                // side input form to take input query
+                SizedBox(
+                  width: DeviceDimension.horzBlockSize * 20,
+                  child: Padding(
+                    padding: EdgeInsets.all(DeviceDimension.horzBlockSize),
+                    child: InputQueryForm(),
+                  ),
+                ),
+              ],
+            )
+          : Column(
+              children: [
+                SizedBox(
+                  height: DeviceDimension.vertBlockSize * 25,
+                  child: Padding(
+                    padding: EdgeInsets.all(DeviceDimension.horzBlockSize),
+                    child: InputQueryForm(),
+                  ),
+                ),
+                Spaces.vertGapInBetween,
+                SizedBox(
+                  height: DeviceDimension.vertBlockSize * 50,
+                  child: ref.read(comicStripControllerProvider),
+                ),
+                Spaces.vertGapInBetween,
+              ],
+            ),
+      floatingActionButton: DeviceDimension.screenWidth < 675
+          ? Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: DeviceDimension.horzBlockSize * 5),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomButton(
-                    icon: Icons.arrow_upward_rounded,
-                    isBottom: false,
+                  // button to create
+                  FloatingActionButton(
+                    heroTag: "create",
+                    child: const Icon(Icons.generating_tokens_sharp),
+                    onPressed: () async {
+                      bool flag = createComicPanel(ref);
+                      if (flag) scrollToBottom(ref);
+                    },
                   ),
-                  CustomButton(
-                    icon: Icons.arrow_downward_rounded,
-                    isBottom: true,
+                  Spaces.horzGapInBetween,
+                  SizedBox(
+                    height: DeviceDimension.vertBlockSize * 5,
+                    child: Text(
+                      "Comic Panel : ${comicFrames.length}",
+                      softWrap: true,
+                      overflow: TextOverflow.clip,
+                      style: Fonts.bold
+                          .setColor(textColor)
+                          .size(DeviceDimension.textScaleFactor * 16),
+                    ),
                   ),
+                  Spaces.horzGapInBetween,
+                  // button to export
+                  FloatingActionButton(
+                    heroTag: "save",
+                    child: const Icon(Icons.save_rounded),
+                    onPressed: () async {
+                      int totalPanels = comicFrames.length;
+                      if (totalPanels <= 0) {
+                        showToast("Create a panel to begin");
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const CustomDialogBox();
+                          },
+                        );
+                      }
+                    },
+                  )
                 ],
               ),
-            ),
-          // side input form to take input query
-          SizedBox(
-            width: DeviceDimension.horzBlockSize * 20,
-            child: Padding(
-              padding: EdgeInsets.all(DeviceDimension.horzBlockSize),
-              child: InputQueryForm(),
-            ),
-          ),
-        ],
-      ),
+            )
+          : null,
     );
   }
 }

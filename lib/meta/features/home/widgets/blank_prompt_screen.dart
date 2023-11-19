@@ -15,7 +15,7 @@ class BlankInputQueryScreen extends StatelessWidget {
         style: Fonts.light
             .setColor(Colors.white)
             .letterSpace(0.9)
-            .size(DeviceDimension.horzBlockSize),
+            .size(DeviceDimension.textScaleFactor * 15),
       ),
     );
   }
